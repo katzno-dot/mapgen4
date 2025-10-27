@@ -36,27 +36,13 @@ jobs:
           esbuild --analyze --bundle mapgen4.ts --minify --sourcemap --outfile=build/_bundle.js
           esbuild --bundle worker.ts --sourcemap --minify --outfile=build/_worker.js
       
-      - name: Prepare deployment files
-        run: |
-          # Copy HTML files and static assets to build directory
-          cp embed.html build/
-          cp index.html build/ 2>/dev/null || echo "index.html not found, skipping"
-          cp -r *.css build/ 2>/dev/null || echo "No CSS files found"
-          cp -r *.png build/ 2>/dev/null || echo "No PNG files found"
-          cp -r *.jpg build/ 2>/dev/null || echo "No JPG files found"
-          cp -r *.gif build/ 2>/dev/null || echo "No GIF files found"
-          cp config.js build/ 2>/dev/null || echo "config.js not found, skipping"
-          # Copy points data files
-          cp build/points-*.data build/ 2>/dev/null || echo "Points data already in build"
-          ls -la build/
-      
       - name: Setup Pages
         uses: actions/configure-pages@v4
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './build'
+          path: '.'
       
       - name: Deploy to GitHub Pages
         id: deployment
